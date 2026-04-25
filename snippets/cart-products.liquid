@@ -36,6 +36,10 @@
     style="--product-title-case: uppercase;"
   {% endif %}
 >
+  {%- unless cart.empty? or force_empty -%}
+    {% render 'cart-shipping-progress' %}
+  {%- endunless -%}
+
   {% if cart.empty? or force_empty %}
     {%- if shop.customer_accounts_enabled and customer == null -%}
       <p>

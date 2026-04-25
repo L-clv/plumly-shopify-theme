@@ -1730,6 +1730,36 @@
       },
       {
         "type": "header",
+        "content": "Free shipping progress bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_progress",
+        "label": "Show free-shipping progress bar in cart",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold (in cents)",
+        "info": "Set to 0 to disable. Use store currency cents (e.g. 5000 = $50.00).",
+        "default": 5000
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_progress_message",
+        "label": "Progress message",
+        "info": "Use [remaining] to insert the amount needed for free shipping.",
+        "default": "You are [remaining] away from free shipping"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_reached_message",
+        "label": "Threshold reached message",
+        "default": "You qualify for free shipping!"
+      },
+      {
+        "type": "header",
         "content": "t:content.cart_features"
       },
       {
