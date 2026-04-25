@@ -79,146 +79,146 @@
       </div>
     </dialog>
   </newsletter-popup>
+{%- endif -%}
 
-  {% stylesheet %}
-    .newsletter-popup {
-      width: min(540px, calc(100vw - 32px));
-      max-width: 100%;
-      padding: 0;
-      border: none;
-      border-radius: 12px;
-      background: var(--color-background);
-      color: var(--color-foreground);
-      box-shadow: 0 24px 64px rgb(0 0 0 / 0.18);
-      overflow: hidden;
-    }
+{% stylesheet %}
+  .newsletter-popup {
+    width: min(540px, calc(100vw - 32px));
+    max-width: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    box-shadow: 0 24px 64px rgb(0 0 0 / 0.18);
+    overflow: hidden;
+  }
 
-    .newsletter-popup::backdrop {
-      background: rgb(0 0 0 / 0.45);
-      backdrop-filter: blur(2px);
-    }
+  .newsletter-popup::backdrop {
+    background: rgb(0 0 0 / 0.45);
+    backdrop-filter: blur(2px);
+  }
 
-    .newsletter-popup__close {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      z-index: 2;
-      width: 36px;
-      height: 36px;
-      border: none;
-      border-radius: 999px;
-      background: rgb(255 255 255 / 0.85);
-      color: var(--color-foreground);
-      font-size: 1.5rem;
-      line-height: 1;
-      cursor: pointer;
-    }
+  .newsletter-popup__close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.85);
+    color: var(--color-foreground);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
 
-    .newsletter-popup__close:hover {
-      background: rgb(255 255 255);
-    }
+  .newsletter-popup__close:hover {
+    background: rgb(255 255 255);
+  }
 
+  .newsletter-popup__media img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+
+  .newsletter-popup__content {
+    padding: 24px 28px 28px;
+    text-align: center;
+  }
+
+  .newsletter-popup__eyebrow {
+    margin: 0 0 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+  }
+
+  .newsletter-popup__heading {
+    margin: 0 0 8px;
+  }
+
+  .newsletter-popup__body {
+    margin: 0 0 20px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  .newsletter-popup__field {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-popup__field input[type='email'] {
+    flex: 1 1 200px;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid rgb(from var(--color-foreground) r g b / 0.25);
+    border-radius: 8px;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-size: 0.9375rem;
+  }
+
+  .newsletter-popup__field input[type='email']:focus {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 1px;
+  }
+
+  .newsletter-popup__submit {
+    flex: 0 0 auto;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    background: var(--color-foreground);
+    color: var(--color-background);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .newsletter-popup__submit:hover {
+    opacity: 0.92;
+  }
+
+  .newsletter-popup__success {
+    margin: 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgb(from var(--color-foreground) r g b / 0.05);
+    font-weight: 500;
+  }
+
+  .newsletter-popup__error {
+    margin: 8px 0 0;
+    color: rgb(204 51 51);
+    font-size: 0.875rem;
+  }
+
+  .newsletter-popup__fine-print {
+    margin: 16px 0 0;
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 749px) {
     .newsletter-popup__media img {
-      display: block;
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
+      height: 160px;
     }
 
     .newsletter-popup__content {
-      padding: 24px 28px 28px;
-      text-align: center;
+      padding: 20px 20px 24px;
     }
-
-    .newsletter-popup__eyebrow {
-      margin: 0 0 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      opacity: 0.7;
-    }
-
-    .newsletter-popup__heading {
-      margin: 0 0 8px;
-    }
-
-    .newsletter-popup__body {
-      margin: 0 0 20px;
-      font-size: 0.9375rem;
-      line-height: 1.5;
-      opacity: 0.85;
-    }
-
-    .newsletter-popup__field {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .newsletter-popup__field input[type='email'] {
-      flex: 1 1 200px;
-      min-width: 0;
-      padding: 12px 14px;
-      border: 1px solid rgb(from var(--color-foreground) r g b / 0.25);
-      border-radius: 8px;
-      background: var(--color-background);
-      color: var(--color-foreground);
-      font-size: 0.9375rem;
-    }
-
-    .newsletter-popup__field input[type='email']:focus {
-      outline: 2px solid var(--color-foreground);
-      outline-offset: 1px;
-    }
-
-    .newsletter-popup__submit {
-      flex: 0 0 auto;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 8px;
-      background: var(--color-foreground);
-      color: var(--color-background);
-      font-size: 0.9375rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .newsletter-popup__submit:hover {
-      opacity: 0.92;
-    }
-
-    .newsletter-popup__success {
-      margin: 0;
-      padding: 12px;
-      border-radius: 8px;
-      background: rgb(from var(--color-foreground) r g b / 0.05);
-      font-weight: 500;
-    }
-
-    .newsletter-popup__error {
-      margin: 8px 0 0;
-      color: rgb(204 51 51);
-      font-size: 0.875rem;
-    }
-
-    .newsletter-popup__fine-print {
-      margin: 16px 0 0;
-      font-size: 0.75rem;
-      opacity: 0.6;
-    }
-
-    @media (max-width: 749px) {
-      .newsletter-popup__media img {
-        height: 160px;
-      }
-
-      .newsletter-popup__content {
-        padding: 20px 20px 24px;
-      }
-    }
-  {% endstylesheet %}
-{%- endif -%}
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -340,9 +340,6 @@
     {
       "name": "Newsletter popup"
     }
-  ],
-  "enabled_on": {
-    "groups": ["footer", "*"]
-  }
+  ]
 }
 {% endschema %}
