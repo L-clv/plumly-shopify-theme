@@ -69,6 +69,9 @@
     data-placeholder="true"
   {% endif %}
 >
+  {%- unless onboarding -%}
+    {% render 'product-badges', product: product %}
+  {%- endunless -%}
   <a
     id="{{ product_card_id | md5 }}"
     {% unless onboarding %}
@@ -111,6 +114,10 @@
 </product-card>
 
 {% stylesheet %}
+  product-card {
+    position: relative;
+  }
+
   .product-card__placeholder-image svg {
     height: 100%;
   }

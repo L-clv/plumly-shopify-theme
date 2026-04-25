@@ -1730,6 +1730,21 @@
       },
       {
         "type": "header",
+        "content": "Product badges"
+      },
+      {
+        "type": "select",
+        "id": "product_badge_sale_format",
+        "label": "Sale badge format",
+        "options": [
+          { "value": "label", "label": "Label (\"Sale\")" },
+          { "value": "percent", "label": "Percent off (\"-30%\")" }
+        ],
+        "default": "percent",
+        "info": "Sale badge appears when compare_at_price > price. Custom badge text per product is set via the metafield custom.badge (single-line text)."
+      },
+      {
+        "type": "header",
         "content": "Free shipping progress bar"
       },
       {

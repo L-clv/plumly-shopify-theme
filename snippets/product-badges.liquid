@@ -1,0 +1,113 @@
+{% doc %}
+  Renders product corner badges (Sale, Sold out, Custom).
+
+  Custom badge label comes from the product metafield `custom.badge`
+  (single_line_text_field). Sold-out and Sale badges are derived from product state.
+
+  @param {object} product - The product object
+  @param {string} [position] - 'top-left' (default) | 'top-right'
+
+  @example
+  {% render 'product-badges', product: product %}
+  {% render 'product-badges', product: product, position: 'top-right' %}
+{% enddoc %}
+
+{%- liquid
+  assign pos = position | default: 'top-left'
+  assign show_sale = false
+  if product.compare_at_price > product.price
+    assign show_sale = true
+  endif
+
+  assign show_sold_out = false
+  unless product.available
+    assign show_sold_out = true
+  endunless
+
+  assign custom_label = product.metafields.custom.badge | default: ''
+  if custom_label != blank
+    assign custom_label = custom_label | strip
+  endif
+
+  assign show_any = false
+  if show_sale or show_sold_out or custom_label != blank
+    assign show_any = true
+  endif
+-%}
+
+{%- if show_any -%}
+  <div
+    class="product-badges product-badges--{{ pos }}"
+    aria-hidden="true"
+  >
+    {%- if custom_label != blank -%}
+      <span class="product-badge product-badge--custom">{{ custom_label }}</span>
+    {%- endif -%}
+
+    {%- if show_sold_out -%}
+      <span class="product-badge product-badge--sold-out">{{ 'products.product.sold_out' | t | default: 'Sold out' }}</span>
+    {%- elsif show_sale -%}
+      {%- assign discount_amount = product.compare_at_price | minus: product.price -%}
+      {%- assign discount_percent = discount_amount | times: 100.0 | divided_by: product.compare_at_price | round -%}
+      <span class="product-badge product-badge--sale">
+        {%- if settings.product_badge_sale_format == 'percent' and discount_percent > 0 -%}
+          -{{ discount_percent }}%
+        {%- else -%}
+          {{ 'products.product.on_sale' | t | default: 'Sale' }}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+  </div>
+
+  {% stylesheet %}
+    .product-badges {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: none;
+    }
+
+    .product-badges--top-left {
+      top: 8px;
+      inset-inline-start: 8px;
+      align-items: flex-start;
+    }
+
+    .product-badges--top-right {
+      top: 8px;
+      inset-inline-end: 8px;
+      align-items: flex-end;
+    }
+
+    .product-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      background: var(--color-foreground);
+      color: var(--color-background);
+    }
+
+    .product-badge--sale {
+      background: rgb(204 51 51);
+      color: white;
+    }
+
+    .product-badge--sold-out {
+      background: rgb(80 80 80);
+      color: white;
+    }
+
+    .product-badge--custom {
+      background: var(--color-foreground);
+      color: var(--color-background);
+    }
+  {% endstylesheet %}
+{%- endif -%}
