@@ -45,7 +45,7 @@
     {%- endif -%}
 
     {%- if show_sold_out -%}
-      <span class="product-badge product-badge--sold-out">{{ 'products.product.sold_out' | t | default: 'Sold out' }}</span>
+      <span class="product-badge product-badge--sold-out">{{ 'content.product_badge_sold_out' | t }}</span>
     {%- elsif show_sale -%}
       {%- assign discount_amount = product.compare_at_price | minus: product.price -%}
       {%- assign discount_percent = discount_amount | times: 100.0 | divided_by: product.compare_at_price | round -%}
@@ -53,7 +53,7 @@
         {%- if settings.product_badge_sale_format == 'percent' and discount_percent > 0 -%}
           -{{ discount_percent }}%
         {%- else -%}
-          {{ 'products.product.on_sale' | t | default: 'Sale' }}
+          {{ 'content.product_badge_sale' | t }}
         {%- endif -%}
       </span>
     {%- endif -%}
