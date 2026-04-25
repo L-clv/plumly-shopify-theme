@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Horizon",
-    "theme_version": "3.4.0",
-    "theme_author": "Shopify",
-    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
-    "theme_support_url": "https://support.shopify.com/"
+    "theme_name": "Plumly",
+    "theme_version": "0.1.0",
+    "theme_author": "Plumly",
+    "theme_documentation_url": "https://github.com/L-clv/plumly-shopify-theme",
+    "theme_support_url": "https://github.com/L-clv/plumly-shopify-theme/issues"
   },
   {
     "name": "t:names.logo_and_favicon",
