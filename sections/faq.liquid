@@ -1,0 +1,260 @@
+{% comment %}
+  Plumly: FAQ section with accordion items.
+
+  Block-driven for now. To switch to metaobject-driven later:
+    1. Define a `faq_item` metaobject in admin (fields: question, answer)
+    2. Add a `list.metaobject_reference` setting here pointing at faq_item entries
+    3. Loop over the referenced metaobjects instead of section.blocks
+{% endcomment %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="faq section spacing-style color-{{ section.settings.color_scheme }}"
+  style="
+    {%- render 'spacing-style', settings: section.settings %};
+    --faq-max-width: {{ section.settings.max_width }}px;
+  "
+>
+  <div class="faq__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="faq__heading h3">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="faq__subheading">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'faq-item' -%}
+            <details class="faq__item" {{ block.shopify_attributes }} {% if block.settings.open_by_default %}open{% endif %}>
+              <summary class="faq__question">
+                <span class="faq__question-text">{{ block.settings.question | escape }}</span>
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </summary>
+              <div class="faq__answer rte">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq__inner {
+    max-width: var(--faq-max-width, 720px);
+    margin: 0 auto;
+  }
+
+  .faq__heading {
+    margin: 0 0 8px;
+  }
+
+  .faq__subheading {
+    margin: 0 0 32px;
+    opacity: 0.8;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgb(from var(--color-foreground) r g b / 0.12);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid rgb(from var(--color-foreground) r g b / 0.12);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 500;
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    user-select: none;
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question:hover {
+    opacity: 0.85;
+  }
+
+  .faq__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: transform 200ms ease;
+  }
+
+  .faq__item[open] .faq__icon {
+    transform: rotate(45deg);
+  }
+
+  .faq__answer {
+    padding: 0 0 20px;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .faq__answer > *:first-child {
+    margin-top: 0;
+  }
+
+  .faq__answer > *:last-child {
+    margin-bottom: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "class": "section-faq",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width",
+      "min": 480,
+      "max": 1200,
+      "step": 40,
+      "unit": "px",
+      "default": 720
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq-item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We offer 30-day returns on unused items. Contact support to start a return.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Most orders ship within 1–2 business days and arrive in 3–5 business days.</p>"
+          }
+        },
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer free returns within 30 days of delivery on unused items.</p>"
+          }
+        },
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes — we ship worldwide. International shipping rates are calculated at checkout.</p>"
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["*"]
+  }
+}
+{% endschema %}
